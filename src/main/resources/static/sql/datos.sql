@@ -1,0 +1,6 @@
+ALTER TABLE datos DROP FOREIGN KEY ;
+
+ALTER TABLE datos
+ADD CONSTRAINT 
+FOREIGN KEY (id_producto) REFERENCES producto(id_producto)
+ON DELETE CASCADE;

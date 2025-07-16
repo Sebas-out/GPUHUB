@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Trabajadores - GPUHUB</title>
+    <link rel="icon" type="image/png" th:href="@{/img/g.PNG}">
+    <link rel="stylesheet" th:href="@{/css/panel.css}">
+    <link rel="stylesheet" th:href="@{/css/gestion-nuevo.css}">
+    <th:block th:replace="fragments/header :: head"></th:block>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Script de partículas -->
+    <script th:src="@{/js/particulas.js}" defer></script>
+    <style>
+        body { 
+            padding-top: 80px; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #1a001a;
+            color: #fff;
+        }
+        
+        .contenedor-principal {
+            flex: 1;
+            padding: 2rem 1rem;  
+            margin: 0;           
+            width: 100%;
+            max-width: 100%;
+        }
+        
+        .table-container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1.5rem 0.5rem; 
+            border-radius: 8px;
+            margin: 1rem 0;          
+            width: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+            max-height: 80vh;        
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Contenedor de la tabla con scroll */
+        .table-responsive {
+            overflow-y: auto;        
+            max-height: calc(80vh - 100px); 
+            margin-right: -0.5rem;   
+            padding-right: 0.5rem;   
+        }
+        
+        /* Estilo personalizado para la barra de desplazamiento */
+        .table-responsive::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .table-responsive::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        .table-responsive::-webkit-scrollbar-thumb {
+            background: var(--color-primario);
+            border-radius: 4px;
+        }
+        
+        .table-responsive::-webkit-scrollbar-thumb:hover {
+            background: #b38f00;
+        }
+        
+        .table {
+            --bs-table-bg: transparent;
+            --bs-table-color: #fff;
+            width: 100%;
+            min-width: 100%;
+            table-layout: fixed;  
+            margin: 0;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        
+        /* Ajustar el ancho de las celdas */
+        .table th, .table td {
+            white-space: nowrap;  
+            padding: 0.75rem 0.5rem;  
+            vertical-align: middle; 
+            text-align: center; 
+        }
+        
+        /* Asegurar que el botón de editar de fecha esté centrado */
+        .btn-outline-warning {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+        }
+        
+        /* Asegurar que los botones de acción estén centrados */
+        .btn-group {
+            justify-content: center;
+        }
+        
+        .table td, .table th {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .table-hover tbody tr:hover td, 
+        .table-hover tbody tr:hover th {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+        }
+        
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .table {
+            width: 100%;
+            min-width: 1000px; 
+            table-layout: auto;
+            margin-bottom: 0;
+        }
+        
+        /* Estilos para el modal de confirmación */
+        .modal-confirm {
+            color: #fff;
+        }
+        
+        .modal-confirm .modal-content {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #ffff00;
+            border-radius: 8px;
+        }
+        
+        .modal-confirm .modal-header {
+            border-bottom: 1px solid #ffff00;
+        }
+        
+        .modal-confirm .modal-title {
+            color: #ffff00;
+            font-family: 'Press Start 2P', 'Courier New', monospace;
+            font-size: 1rem;
+        }
+        
+        .modal-confirm .modal-body {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .modal-confirm .modal-body i {
+            font-size: 3rem;
+            color: #ffcc00;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .modal-confirm .modal-footer {
+            border-top: 1px solid #ffff00;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .modal-confirm .btn-cancel {
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #6c757d;
+            margin-right: 1rem;
+        }
+        
+        .modal-confirm .btn-cancel:hover {
+            background-color: #6c757d;
+            color: #fff;
+        }
+        
+        .modal-confirm .btn-confirm {
+            background-color: #dc3545;
+            border: 2px solid #dc3545;
+            color: #fff;
+        }
+        
+        .modal-confirm .btn-confirm:hover {
+            background-color: #bb2d3b;
+            border-color: #b02a37;
+        }
+        
+        /* Estilos para el grupo de botones */
+        .btn-group {
+            display: flex;
+            gap: 0.75rem; 
+        }
+        
+        /* Asegurar que los botones tengan un ancho mínimo */
+        .btn-group .btn {
+            min-width: 80px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.5rem;
+        }
+        
+        /* Ajustar el tamaño de los iconos */
+        .btn-group .btn i {
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 991.98px) {
+            .table thead {
+                display: none;
+            }
+            
+            .table, .table tbody, .table tr, .table td {
+                display: block;
+                width: 100%;
+            }
+            
+            .table tr {
+                margin-bottom: 1rem;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                overflow: hidden;
+            }
+            
+            .table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 1rem;
+                width: 45%;
+                padding-right: 1rem;
+                text-align: left;
+                font-weight: bold;
+                color: #ffff00;
+            }
+            
+            .table td:last-child {
+                border-bottom: none;
+                display: flex;
+                justify-content: flex-end;
+                gap: 0.5rem;
+                padding: 0.75rem;
+            }
+        }
+        
+        .btn {
+            font-family: 'Press Start 2P', 'Courier New', monospace;
+            font-size: 0.7rem;
+            padding: 0.5rem 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid;
+            transition: all 0.3s ease;
+        }
+        
+        
+        .btn-outline-yellow, .btn-outline-neon {
+            color: #ff0;  
+            border-color: #ff0;
+            background-color: transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-yellow:hover, .btn-outline-neon:hover {
+            background-color: #ff0;  
+            color: #000;
+            border-color: #ff0;
+        }
+        
+        /* Estilos para el botón sólido amarillo */
+        .btn-primary, .btn-neon {
+            background-color: #ff0;  
+            border-color: #ff0;
+            color: #000;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover, .btn-neon:hover {
+            background-color: #e6e600;  
+            border-color: #e6e600;
+            color: #000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 255, 0, 0.3);
+        }
+        
+        @media (min-width: 768px) {
+            body { 
+                padding-top: 80px; 
+            }
+            
+            .contenedor-principal {
+                padding: 2rem 3rem;
+            }
+            
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.8rem;
+            }
+        }
+        .modal-content, .glass-card {
+            background: rgba(10, 10, 10, 0.97) !important;
+            border: 1.5px solid #ffff00;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.85);
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body class="fondo-panel">
+  <!-- Efecto de partículas -->
+  <div id="particulas-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
+  
+  <!-- Header específico del panel -->
+  <div th:replace="fragments/panel-header :: panelHeader"></div>
+    
+  <!-- Contenido principal -->
+  <main class="contenedor-principal">
+    <h1 class="titulo-panel">
+        <i class="fas fa-users-cog"></i> GESTIÓN DE TRABAJADORES
+    </h1>
+        
+        <!-- Mensajes de éxito/error -->
+        <div th:if="${mensajeExito != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle me-2"></i>
+            <span th:text="${mensajeExito}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        <div th:if="${mensajeError != null}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            <span th:text="${mensajeError}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        
+        <div class="d-flex gap-3 mb-4">
+            <a th:href="@{/panel}" class="btn btn-outline-yellow">
+                <i class="fas fa-arrow-left me-2"></i> VOLVER AL PANEL
+            </a>
+            <a th:href="@{/trabajadores/nuevo}" class="btn btn-primary">
+                <i class="fas fa-plus me-2"></i> NUEVO TRABAJADOR
+            </a>
+        </div>
+        
+        <!-- Tabla de trabajadores -->
+        <div class="table-container">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-id-card me-2"></i>DNI</th>
+                            <th><i class="fas fa-user me-2"></i>Nombres</th>
+                            <th><i class="fas fa-user-tag me-2"></i>Apellidos</th>
+                            <th><i class="fas fa-phone me-2"></i>Teléfono</th>
+                            <th><i class="fas fa-calendar-alt me-2"></i>Fecha de Acceso</th>
+                            <th><i class="fas fa-info-circle me-2"></i>Estado</th>
+                            <th><i class="fas fa-cogs me-2"></i>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="trabajador : ${trabajadores}">
+                            <td data-label="DNI" th:text="${trabajador.dni}"></td>
+                            <td data-label="Nombres" th:text="${trabajador.nombres}"></td>
+                            <td data-label="Apellidos" th:text="${trabajador.apellidos}"></td>
+                            <td data-label="Teléfono" th:text="${trabajador.telefono}"></td>
+                            <td data-label="Fecha de Acceso">
+                                <span th:text="${#temporals.format(trabajador.fechaAcceso, 'dd/MM/yyyy')}" class="me-2"></span>
+                                <button class="btn btn-sm btn-outline-warning" 
+                                        data-bs-toggle="modal" 
+                                        data-bs-target="#modalEditarFecha"
+                                        th:data-id="${trabajador.idTrabajador}"
+                                        th:data-fecha="${#temporals.format(trabajador.fechaAcceso, 'yyyy-MM-dd')}"
+                                        title="Editar fecha de acceso">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                            <td data-label="Estado">
+                                <span th:class="${trabajador.estado == 1} ? 'badge bg-success' : 'badge bg-danger'" 
+                                      th:text="${trabajador.estado == 1 ? 'Tiene acceso' : 'Sin acceso'}">
+                                </span>
+                            </td>
+                            <td data-label="Acciones">
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-sm btn-outline-primary btn-editar"
+                                            th:data-id="${trabajador.idTrabajador}"
+                                            th:data-telefono="${trabajador.telefono}"
+                                            th:data-rol="${trabajador.rol ?: 'TRABAJADOR'}"
+                                            title="Editar trabajador">
+                                        <i class="fas fa-edit"></i>
+                                        <span class="d-none d-md-inline"> Editar</span>
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-danger" 
+                                            th:onclick="'confirmarEliminar(' + ${trabajador.idTrabajador} + ')'"
+                                            title="Eliminar trabajador">
+                                        <i class="fas fa-trash-alt"></i>
+                                        <span class="d-none d-md-inline"> Eliminar</span>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Mensaje cuando no hay trabajadores -->
+            <div th:if="${trabajadores != null && trabajadores.isEmpty()}" class="text-center py-5">
+                <i class="fas fa-users-slash fa-3x mb-3" style="color: var(--color-primario);"></i>
+                <h4 class="mb-3">NO HAY TRABAJADORES REGISTRADOS</h4>
+                <p class="text-muted">Comienza agregando un nuevo trabajador con el botón de arriba.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación para eliminar trabajador -->
+    <div class="modal fade modal-confirm" id="modalConfirmarEliminar" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" style="z-index: 1060;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Confirmar Eliminación
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <h5 class="mb-3">¿ESTÁS SEGURO DE ELIMINAR ESTE TRABAJADOR?</h5>
+                    <p class="text-muted">Esta acción no se puede deshacer. Se eliminarán todos los datos del trabajador.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="button" class="btn btn-confirm" id="btnConfirmarEliminar">
+                        <i class="fas fa-trash-alt me-2"></i>Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar fecha -->
+    <div class="modal fade" id="modalEditarFecha" tabindex="-1" aria-hidden="true" data-bs-backdrop="true" style="z-index: 1050;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-card">
+                <div class="modal-header border-bottom border-neon">
+                    <h5 class="modal-title text-uppercase text-neon">
+                        <i class="fas fa-calendar-alt me-2"></i>Actualizar Fecha de Acceso
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="formEditarFecha" method="post" class="needs-validation" novalidate>
+                    <div class="modal-body">
+                        <input type="hidden" id="trabajadorId" name="id">
+                        <div class="mb-3">
+                            <label for="nuevaFecha" class="form-label text-neon">
+                                <i class="fas fa-calendar-day me-2"></i>Nueva Fecha de Acceso
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark text-neon border-neon">
+                                    <i class="fas fa-calendar"></i>
+                                </span>
+                                <input type="date" 
+                                       class="form-control bg-dark text-neon border-neon" 
+                                       id="nuevaFecha" 
+                                       name="fechaAcceso" 
+                                       required
+                                       th:attr="min=${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"
+                                       max="2100-12-31">
+                                <div class="invalid-feedback">
+                                    Por favor selecciona una fecha válida
+                                </div>
+                            </div>
+                            <small class="form-text" style="color: #fff !important; opacity: 1 !important;">Formato: DD/MM/YYYY</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top border-neon">
+                        <button type="button" 
+                                class="btn btn-outline-neon" 
+                                data-bs-dismiss="modal">
+                            <i class="fas fa-times me-2"></i>Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-neon">
+                            <i class="fas fa-save me-2"></i>Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Modal de confirmación de eliminación -->
+    <div class="modal fade" id="confirmarEliminarModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-card">
+                <div class="modal-header border-bottom border-neon">
+                    <h5 class="modal-title text-uppercase text-neon">
+                        <i class="fas fa-exclamation-triangle me-2"></i>Confirmar Eliminación
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-trash-alt fa-4x text-danger mb-3"></i>
+                        <p class="mb-0">¿Estás seguro de que deseas eliminar a este trabajador?</p>
+                        <p class="text-muted small mt-2">Esta acción no se puede deshacer.</p>
+                    </div>
+                </div>
+                <div class="modal-footer border-top border-neon">
+                    <button type="button" class="btn btn-outline-neon" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>Cancelar
+                    </button>
+                    <button type="button" id="btnConfirmarEliminar" class="btn btn-danger">
+                        <i class="fas fa-trash-alt me-2"></i>Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar trabajador -->
+    <div class="modal fade" id="modalEditarTrabajador" tabindex="-1" aria-hidden="true" data-bs-backdrop="true" style="z-index: 1050;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-card">
+                <div class="modal-header border-bottom border-neon">
+                    <h5 class="modal-title text-uppercase text-neon">
+                        <i class="fas fa-user-edit me-2"></i>Editar Trabajador
+                    </h5>
+                </div>
+                <form id="formEditarTrabajador" method="post" class="needs-validation" novalidate>
+                    <div class="modal-body">
+                        <input type="hidden" id="trabajadorIdEditar" name="id">
+                        
+                        <div class="mb-3">
+                            <label for="telefonoEditar" class="form-label text-neon">
+                                <i class="fas fa-phone me-2"></i>Teléfono
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark text-neon border-neon">
+                                    <i class="fas fa-phone"></i>
+                                </span>
+                                <input type="tel" 
+                                       class="form-control bg-dark text-neon border-neon" 
+                                       id="telefonoEditar" 
+                                       name="telefono" 
+                                       pattern="[0-9]{9}"
+                                       maxlength="9"
+                                       required
+                                       oninput="if(this.value.length>9)this.value=this.value.slice(0,9);">
+                                <div class="invalid-feedback">
+                                    Por favor ingresa un número de teléfono válido (9 dígitos)
+                                </div>
+                            </div>
+                        </div>
+                        <!-- CAMPO CAMBIAR CONTRASEÑA -->
+                        <div class="mb-3">
+                            <label for="contrasenaEditar" class="form-label text-neon">
+                                <i class="fas fa-key me-2"></i>Cambiar Contraseña
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark text-neon border-neon">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                                <input type="password"
+                                       class="form-control bg-dark text-neon border-neon"
+                                       id="contrasenaEditar"
+                                       name="password"
+                                       minlength="6"
+                                       maxlength="30"
+                                       placeholder="Nueva contraseña (opcional)">
+                                <div class="invalid-feedback">
+                                    La contraseña debe tener al menos 6 caracteres.
+                                </div>
+                            </div>
+                            <small class="form-text" style="color: #fff !important; opacity: 1 !important;">Déjalo vacío si no deseas cambiar la contraseña.</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="rolEditar" class="form-label text-neon">
+                                <i class="fas fa-user-tag me-2"></i>Rol
+                            </label>
+                            <select class="form-select bg-dark text-neon border-neon" 
+                                    id="rolEditar" 
+                                    name="rol" 
+                                    required>
+                                <option value="">Seleccionar rol...</option>
+                                <option value="ADMIN">Administrador</option>
+                                <option value="TRABAJADOR">Trabajador</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Por favor selecciona un rol
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top border-neon">
+                        <button type="button" 
+                                class="btn btn-outline-neon" 
+                                data-bs-dismiss="modal">
+                            <i class="fas fa-times me-2"></i>Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-neon">
+                            <i class="fas fa-save me-2"></i>Guardar Cambios
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast de notificación -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+        <div id="toastExito" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto">Éxito</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toastMensaje">
+                Operación completada correctamente
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS y dependencias -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Variable global para almacenar el ID del trabajador a eliminar
+        window.trabajadorAEliminar = null;
+        
+        // Función global para mostrar el modal de confirmación
+        window.confirmarEliminar = function(id) {
+            window.trabajadorAEliminar = id;
+            const modal = new bootstrap.Modal(document.getElementById('modalConfirmarEliminar'));
+            modal.show();
+        };
+        
+        // Inicialización cuando el DOM está listo
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar el botón de confirmar eliminación
+            const btnConfirmarEliminar = document.getElementById('btnConfirmarEliminar');
+            if (btnConfirmarEliminar) {
+                btnConfirmarEliminar.addEventListener('click', async function() {
+                    if (window.trabajadorAEliminar) {
+                        try {
+                            const response = await fetch(`/trabajadores/eliminar/${window.trabajadorAEliminar}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                }
+                            });
+                            
+                            const result = await response.json();
+                            
+                            if (response.ok) {
+                                // Mostrar mensaje de éxito y recargar
+                                const modal = bootstrap.Modal.getInstance(document.getElementById('modalConfirmarEliminar'));
+                                if (modal) modal.hide();
+                                
+                                // Mostrar mensaje de éxito
+                                const toastEl = document.getElementById('toastExito');
+                                if (toastEl) {
+                                    const toast = new bootstrap.Toast(toastEl);
+                                    document.getElementById('toastMensaje').textContent = result.mensaje || 'Trabajador eliminado correctamente';
+                                    toast.show();
+                                }
+                                
+                                // Recargar después de 1.5 segundos
+                                setTimeout(() => {
+                                    window.location.reload();
+                                }, 1500);
+                            } else {
+                                throw new Error(result.error || 'Error al eliminar el trabajador');
+                            }
+                        } catch (error) {
+                            console.error('Error al eliminar el trabajador:', error);
+                            alert('Error al eliminar el trabajador');
+                        }
+                    }
+                });
+            }
+            
+            // Configurar el modal de edición de fecha
+            const modal = document.getElementById('modalEditarFecha');
+            if (modal) {
+                modal.addEventListener('show.bs.modal', function(event) {
+                    const button = event.relatedTarget;
+                    const id = button.getAttribute('data-id');
+                    const fecha = button.getAttribute('data-fecha');
+                    
+                    document.getElementById('trabajadorId').value = id || '';
+                    document.getElementById('nuevaFecha').value = fecha || '';
+                    
+                    const form = document.getElementById('formEditarFecha');
+                    if (form) {
+                        form.action = '/trabajadores/actualizar-fecha/' + (id || '');
+                    }
+                });
+            }
+            
+            // Manejar el envío del formulario de fecha
+            const formFecha = document.getElementById('formEditarFecha');
+            if (formFecha) {
+                formFecha.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    if (!submitBtn) return;
+                    
+                    const url = this.action;
+                    const formData = new FormData(this);
+                    
+                    // Enviar la petición
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams(formData).toString()
+                    })
+                    .then(response => {
+                        if (!response.ok) throw new Error('Error al actualizar la fecha');
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error al actualizar la fecha');
+                    });
+                });
+            }
+        });
+        
+        // Configurar los manejadores de eventos para los botones de editar
+        document.addEventListener('DOMContentLoaded', function() {
+            // Configurar el modal de edición de trabajador
+            document.querySelectorAll('.btn-editar').forEach(btn => {
+                btn.addEventListener('click', async function(e) {
+                    e.preventDefault();
+                    
+                    const id = this.getAttribute('data-id');
+                    const telefono = this.getAttribute('data-telefono') || '';
+                    const rol = this.getAttribute('data-rol') || 'TRABAJADOR';
+                    
+                    // Mostrar el modal inmediatamente para mejor experiencia de usuario
+                    const modal = new bootstrap.Modal(document.getElementById('modalEditarTrabajador'));
+                    
+                    try {
+                        // Obtener los datos actuales del trabajador
+                        const response = await fetch(`/trabajadores/obtener/${id}`, {
+                            method: 'GET',
+                            headers: {
+                                'Accept': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error('No se pudieron cargar los datos del trabajador');
+                        }
+                        
+                        const trabajador = await response.json();
+                        
+                        // Llenar el formulario con los datos actuales
+                        document.getElementById('trabajadorIdEditar').value = id;
+                        document.getElementById('telefonoEditar').value = trabajador.telefono || '';
+                        document.getElementById('rolEditar').value = trabajador.rol || 'TRABAJADOR';
+                        
+                        // Mostrar el modal después de cargar los datos
+                        modal.show();
+                        
+                    } catch (error) {
+                        console.error('Error al cargar los datos del trabajador:', error);
+                        alert('Error al cargar los datos del trabajador. Por favor, inténtalo de nuevo.');
+                    }
+                });
+            });
+        });
+        
+        // Configurar el envío del formulario de edición de trabajador
+        const formEditarTrabajador = document.getElementById('formEditarTrabajador');
+        if (formEditarTrabajador) {
+            formEditarTrabajador.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const trabajadorId = document.getElementById('trabajadorIdEditar').value;
+                const url = '/trabajadores/actualizar/' + trabajadorId;
+                
+                // Obtener los datos del formulario
+                const formData = new FormData(this);
+                
+                try {
+                    // Enviar la petición
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json'
+                        },
+                        body: new URLSearchParams(formData).toString()
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (response.ok) {
+                        // Recargar la página para ver los cambios
+                        window.location.reload();
+                    } else {
+                        throw new Error(result.error || 'Error al actualizar el trabajador');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert(error.message || 'Error al actualizar el trabajador');
+                }
+            });
+        }
+        
+        // La función confirmarEliminar está definida al inicio del archivo
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad</title>
+    <link rel="icon" type="image/png" th:href="@{/img/g.PNG}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <th:block th:replace="fragments/header :: head"></th:block>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <div th:replace="fragments/header :: header"></div>
+    <main class="flex-fill">
+        <div class="contenedor-info-gpuhub">
+            <header>
+                <h1>Política de Privacidad</h1>
+            </header>
+            <section>
+                <h2>Introducción</h2>
+                <p>En [Nombre de tu página web], nos comprometemos a proteger la privacidad de nuestros usuarios. Esta política de privacidad explica cómo recopilamos, usamos y protegemos la información personal que proporcionas al interactuar con nuestro sitio web.</p>
+                
+                <h2>Información que recopilamos</h2>
+                <p>Recopilamos información personal como nombre, correo electrónico y preferencias relacionadas con las tarjetas gráficas y sus compatibilidades con las piezas de PC que consultas.</p>
+                
+                <h2>Uso de la información</h2>
+                <p>Utilizamos la información recopilada para ofrecerte recomendaciones personalizadas, mejorar la experiencia de usuario y enviarte información relevante sobre productos o servicios relacionados.</p>
+                
+                <h2>Protección de datos</h2>
+                <p>Implementamos medidas de seguridad para proteger tu información personal. Sin embargo, ninguna transmisión de datos por Internet es 100% segura, por lo que no podemos garantizar la seguridad absoluta.</p>
+                
+                <h2>Derechos del usuario</h2>
+                <p>Tienes derecho a acceder, corregir o eliminar tu información personal en cualquier momento. Si deseas ejercer estos derechos, puedes contactarnos a través de nuestro formulario de contacto.</p>
+            </section>
+        </div>
+    </main>
+    <div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="fragments/footer :: scripts"></div>
+</body>
+</html>

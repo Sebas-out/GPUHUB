@@ -1,0 +1,347 @@
+:root {
+  --color-primario: #ffd700;
+  --color-fondo: #121212;
+  --color-texto: #ffffff;
+  --color-borde: #444;
+  --color-hover: rgba(255, 215, 0, 0.15);
+  --color-fondo-tarjeta: rgba(20, 20, 20, 0.95);
+  --color-fondo-contenedor: rgba(10, 10, 10, 0.9);
+  --sombra-neon: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+/* Estilos generales */
+body {
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Contenedor principal */
+.contenedor-principal {
+  margin-top: 80px;
+  padding: 1rem;
+  min-height: calc(100vh - 80px);
+  background-color: transparent !important;
+}
+
+/* Estilos para etiquetas en el modal */
+.grupo-formulario label {
+  color: #ff0 !important;
+  font-family: 'Press Start 2P', cursive, monospace !important;
+  font-size: 0.8rem !important;
+  margin-bottom: 0.5rem !important;
+  display: block;
+}
+
+/* Estilos para campos de entrada en el modal */
+.grupo-formulario input[type="text"],
+.grupo-formulario input[type="email"],
+.grupo-formulario input[type="password"],
+.grupo-formulario textarea,
+.grupo-formulario .form-control {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid rgba(255, 255, 0, 0.3) !important;
+  color: white !important;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-family: 'Press Start 2P', cursive, monospace !important;
+  font-size: 0.7rem !important;
+}
+
+.grupo-formulario input[type="text"]:focus,
+.grupo-formulario input[type="email"]:focus,
+.grupo-formulario input[type="password"]:focus,
+.grupo-formulario textarea:focus {
+  outline: none;
+  border-color: #ff0 !important;
+  box-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+}
+
+/* Estilos para los textos generales */
+h1, h2, h3, h4, h5, h6,
+h5.mb-1, p, p.mb-1, small, #tituloInventario {
+  color: #ff0 !important;
+  font-family: 'Press Start 2P', cursive, monospace !important;
+  text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+}
+
+/* Ajustes específicos para diferentes elementos de texto */
+h1 { font-size: 1.8rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.3rem; }
+h4 { font-size: 1.1rem; }
+h5, h5.mb-1 { 
+  font-size: 1rem;
+  margin-bottom: 1rem !important;
+}
+
+p, p.mb-1 {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+small {
+  font-size: 0.7rem;
+  opacity: 0.8;
+}
+
+/* Contenido de las tarjetas */
+.card-body {
+  background-color: transparent !important;
+}
+
+/* Contenedores con scroll */
+#especificaciones,
+#componentes {
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 10px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 4px;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo para la barra de desplazamiento */
+#especificaciones::-webkit-scrollbar,
+#componentes::-webkit-scrollbar {
+  width: 8px;
+}
+
+#especificaciones::-webkit-scrollbar-track,
+#componentes::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+#especificaciones::-webkit-scrollbar-thumb,
+#componentes::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 215, 0, 0.5);
+  border-radius: 4px;
+}
+
+#especificaciones::-webkit-scrollbar-thumb:hover,
+#componentes::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 215, 0, 0.7);
+}
+
+/* Mensaje de selección de almacén */
+#listaProductos .text-muted {
+  color: #ff0 !important;
+  font-family: 'Press Start 2P', cursive, monospace !important;
+  opacity: 0.9;
+  text-shadow: 0 0 5px rgba(255, 255, 0, 0.3);
+  font-size: 0.7rem;
+  text-align: center;
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px dashed rgba(255, 255, 0, 0.3);
+  border-radius: 4px;
+}
+
+/* Tarjetas */
+.card {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid rgba(255, 215, 0, 0.3) !important;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  height: 100%;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.card:hover {
+  box-shadow: var(--sombra-neon);
+}
+
+.card-header {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.3);
+  color: var(--color-primario) !important;
+  padding: 1rem;
+  backdrop-filter: blur(5px);
+}
+
+/* Lista de almacenes */
+#listaAlmacenes {
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primario) transparent;
+  background-color: transparent !important;
+  padding: 10px;
+  border-radius: 0 0 8px 8px;
+  font-family: 'Press Start 2P', cursive, monospace !important;
+}
+
+/* Asegurar que todo el texto en la sección de almacenes sea amarillo con fuente de videojuego */
+#listaAlmacenes,
+#listaAlmacenes *:not(.btn):not(i) {
+  color: #ff0 !important;
+  font-family: 'Press Start 2P', cursive, monospace !important;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  letter-spacing: 0.5px;
+}
+
+/* Sobrescribir cualquier estilo de Bootstrap que pueda estar afectando */
+#listaAlmacenes .text-muted,
+#listaAlmacenes .text-secondary,
+#listaAlmacenes .text-dark {
+  color: var(--color-primario) !important;
+  opacity: 0.8;
+}
+
+#listaAlmacenes::-webkit-scrollbar {
+  width: 6px;
+}
+
+#listaAlmacenes::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#listaAlmacenes::-webkit-scrollbar-thumb {
+  background-color: var(--color-primario);
+  border-radius: 3px;
+}
+
+/* Listas de productos */
+.list-group-item {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 215, 0, 0.2) !important;
+  color: var(--color-texto);
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.list-group-item:hover {
+  background-color: var(--color-hover);
+  border-color: var(--color-primario);
+}
+
+.list-group-item.active {
+  background-color: rgba(255, 215, 0, 0.15);
+  border: 1px solid var(--color-primario);
+  color: var(--color-primario);
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+}
+
+/* Botones */
+.btn {
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: var(--color-primario);
+  border-color: var(--color-primario);
+  color: #000;
+}
+
+.btn-primary:hover {
+  background-color: #ffc800;
+  border-color: #ffc800;
+  color: #000;
+  transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+  color: var(--color-primario);
+  border-color: var(--color-primario);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--color-hover);
+  color: var(--color-primario);
+  border-color: var(--color-primario);
+}
+
+.btn-outline-danger {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-outline-danger:hover {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+/* Estilos para el título del almacén */
+h5 {
+  color: var(--color-primario);
+  margin-bottom: 0.5rem;
+}
+
+/* Texto de productos */
+small {
+  color: #aaa;
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+  .contenedor-principal {
+    margin-top: 60px;
+    padding: 0.5rem;
+  }
+  
+  .card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.list-group-item {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Mensaje cuando no hay almacenes */
+.text-muted {
+  color: #6c757d !important;
+}
+
+/* Ajustes para el contenedor de productos */
+#listaProductos {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(20, 20, 20, 0.5);
+  border-radius: 4px;
+  margin: 0.5rem;
+  padding: 1rem;
+}
+
+/* Estilos para los botones de acción */
+.btn-group-sm > .btn {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
+
+/* Mejoras de accesibilidad */
+button:focus {
+  outline: 2px solid var(--color-primario);
+  outline-offset: 2px;
+}
+
+a:focus {
+  outline: 2px solid var(--color-primario);
+  outline-offset: 2px;
+  text-decoration: none;
+}

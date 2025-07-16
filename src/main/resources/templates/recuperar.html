@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Contraseña - GPUHUB</title>
+    <link rel="icon" type="image/png" th:href="@{/img/g.PNG}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <th:block th:replace="fragments/header :: head"></th:block>
+</head>
+<body class="fondo-login d-flex flex-column min-vh-100">
+  <!-- Contenedor para el efecto de partículas -->
+  <div id="particulas-container"></div>
+  <div th:replace="fragments/header :: header"></div>
+
+  <div class="contenedor-principal flex-grow-1 d-flex align-items-center justify-content-center">
+    <div class="contenedor-login">
+      <div class="tarjeta-login">
+        <div class="encabezado-login">
+          <h1>Recuperar Contraseña</h1>
+          <p>Responde las preguntas de seguridad para restablecer tu contraseña</p>
+        </div>
+        <form class="formulario-login" th:action="@{/recuperar}" method="post">
+          <div th:if="${error}" class="mensaje-error" th:text="${error}"></div>
+          <div th:if="${mensajeExito}" class="mensaje-exito" th:text="${mensajeExito}"></div>
+
+          <div class="grupo-formulario">
+            <label for="correo">Correo Electrónico</label>
+            <input type="email" id="correo" name="correo" required placeholder="Ingresa tu correo registrado" autofocus>
+          </div>
+          <div class="grupo-formulario">
+            <label for="primoFavorito">¿Nombre de tu primo favorito?</label>
+            <input type="text" id="primoFavorito" name="primoFavorito" required placeholder="Escribe el nombre de tu primo favorito">
+          </div>
+          <div class="grupo-formulario">
+            <label for="animalFavorito">¿Tu animal favorito?</label>
+            <input type="text" id="animalFavorito" name="animalFavorito" required placeholder="Escribe tu animal favorito">
+          </div>
+          <div class="grupo-formulario">
+            <label for="lugarFavorito">¿Tu lugar favorito?</label>
+            <input type="text" id="lugarFavorito" name="lugarFavorito" required placeholder="Escribe tu lugar favorito">
+          </div>
+          <div class="grupo-formulario">
+            <label for="nuevaContrasena">Nueva contraseña</label>
+            <div class="contenedor-contrasena">
+              <input type="password" id="nuevaContrasena" name="nuevaContrasena" required placeholder="Ingresa tu nueva contraseña">
+              <button type="button" class="boton-mostrar" onclick="mostrarContrasena('nuevaContrasena')">👁️</button>
+            </div>
+          </div>
+          <div class="grupo-formulario">
+            <label for="confirmarContrasena">Confirmar nueva contraseña</label>
+            <div class="contenedor-contrasena">
+              <input type="password" id="confirmarContrasena" name="confirmarContrasena" required placeholder="Confirma tu nueva contraseña">
+              <button type="button" class="boton-mostrar" onclick="mostrarContrasena('confirmarContrasena')">👁️</button>
+            </div>
+          </div>
+          <button type="submit" class="boton-primario">Restablecer contraseña</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div th:replace="fragments/footer :: footer"></div>
+  <div th:replace="fragments/footer :: scripts"></div>
+  <script>
+    function mostrarContrasena(id) {
+      const input = document.getElementById(id);
+      if (input.type === 'password') {
+        input.type = 'text';
+      } else {
+        input.type = 'password';
+      }
+    }
+  </script>
+</body>
+</html> 

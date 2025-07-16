@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nosotros</title>
+    <link rel="icon" type="image/png" th:href="@{/img/g.PNG}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <th:block th:replace="fragments/header :: head"></th:block>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <div th:replace="fragments/header :: header"></div>
+    <main class="flex-fill">
+        <div class="contenedor-info-gpuhub">
+            <header>
+                <h1>Quiénes Somos</h1>
+            </header>
+            <section>
+                <h2>Nuestra Misión</h2>
+                <p>En [Nombre de tu página web], nos dedicamos a ofrecer información detallada sobre las tarjetas gráficas y su compatibilidad con las diferentes piezas de PC. Nuestro objetivo es ayudarte a tomar decisiones informadas a la hora de elegir componentes para tu sistema.</p>
+
+                <h2>Equipo</h2>
+                <p>Contamos con un equipo de expertos en hardware y tecnología que analiza constantemente los productos más recientes del mercado para ofrecerte la mejor información disponible.</p>
+            </section>
+        </div>
+    </main>
+    <div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="fragments/footer :: scripts"></div>
+</body>
+</html>

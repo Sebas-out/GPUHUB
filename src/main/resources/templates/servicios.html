@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Servicios y Productos</title>
+    <link rel="icon" type="image/png" th:href="@{/img/g.PNG}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <th:block th:replace="fragments/header :: head"></th:block>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <div th:replace="fragments/header :: header"></div>
+    <main class="flex-fill">
+        <div class="contenedor-info-gpuhub">
+            <header>
+                <h1>Servicios y Productos</h1>
+            </header>
+            <section>
+                <h2>Servicios</h2>
+                <p>Ofrecemos guías detalladas sobre la compatibilidad de tarjetas gráficas con diferentes piezas de PC. Además, brindamos asesoramiento personalizado para optimizar el rendimiento de tu sistema.</p>
+
+                <h2>Productos</h2>
+                <p>En nuestra plataforma encontrarás análisis y comparaciones de las mejores tarjetas gráficas disponibles en el mercado, incluyendo características, rendimiento y compatibilidad con diversos componentes de PC.</p>
+            </section>
+        </div>
+    </main>
+    <div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="fragments/footer :: scripts"></div>
+</body>
+</html>

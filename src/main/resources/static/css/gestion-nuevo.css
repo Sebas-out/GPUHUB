@@ -1,0 +1,781 @@
+/* Variables de colores */
+:root {
+  --color-primario: #ffff00;
+  --color-fondo: #1a001a;
+  --color-texto: #ffffff;
+  --color-fondo-tarjeta: rgba(0, 0, 0, 0.7);
+  --color-borde: #333;
+  --color-error: #ff4444;
+  --color-exito: #4CAF50;
+  --sombra-neon: 0 0 10px #ff0, 0 0 20px #ff0, 0 0 30px #ff0;
+}
+
+/* Estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Press Start 2P', cursive, monospace;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
+  image-rendering: pixelated;
+}
+
+body, input, button, textarea, select, h1, h2, h3, h4, h5, h6, p, a, label, .form-control, .btn {
+  font-family: 'Press Start 2P', cursive, monospace;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: none;
+  line-height: 1.6;
+}
+
+/* Estilos para los íconos */
+i, .fas, .far, .fab, .fa {
+  font-size: 1.2em;
+  vertical-align: middle;
+  margin: 0 0.25rem;
+}
+
+/* Íconos específicos */
+.btn i, .btn .fas, .btn .far, .btn .fab, .btn .fa {
+  font-size: 1em;
+}
+
+/* Ajustar tamaño de íconos en la tabla */
+.table i, .table .fas, .table .far, .table .fab, .table .fa {
+  font-size: 1.1em;
+}
+
+/* Ajustar tamaño de íconos en el header */
+.titulo-panel i {
+  font-size: 1.4em;
+  margin-right: 0.5rem;
+}
+
+body {
+  background: linear-gradient(135deg, #1a001a 0%, #000000 100%);
+  color: var(--color-texto);
+  line-height: 1.6;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  padding-top: 60px;
+}
+
+/* Contenedor principal */
+main.contenedor-principal {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* Ajustes de la tabla */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin: 2rem 0;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  border: 1px solid var(--color-primario);
+  box-shadow: 0 0 15px rgba(255, 255, 0, 0.2);
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 0;
+  color: var(--color-texto);
+  min-width: 1000px;
+}
+
+/* Contenedor de partículas */
+#particles-js {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, #1a001a 0%, #000000 100%);
+  pointer-events: none;
+}
+
+/* Contenedor principal */
+.contenedor-principal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2rem 1rem;
+  position: relative;
+  z-index: 1;
+  min-height: calc(100vh - 80px);
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.titulo-pagina {
+  color: var(--color-primario);
+  margin-bottom: 2rem;
+  text-align: center;
+  font-size: 1.8rem;
+  text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+}
+
+/* Tabla */
+.table-container {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--color-primario);
+  border-radius: 8px;
+  padding: 0;
+  width: 100%;
+  margin: 20px auto;
+  box-shadow: 0 0 10px rgba(255, 255, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  backdrop-filter: blur(5px);
+}
+
+.table {
+  background-color: transparent;
+  margin-bottom: 0;
+  color: #fff;
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: rgba(255, 255, 255, 0.05);
+  --bs-table-hover-bg: rgba(255, 255, 0, 0.1);
+  --bs-table-hover-color: #fff;
+}
+
+.table thead th {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: var(--color-primario);
+  border-bottom: 2px solid var(--color-primario);
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  padding: 1rem;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.table tbody tr {
+  transition: all 0.3s ease;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(255, 255, 0, 0.1) !important;
+}
+
+.table tbody td {
+  border: none;
+  vertical-align: middle;
+  padding: 1rem;
+  color: #fff;
+}
+
+/* Contenedor de botones */
+.contenedor-botones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 0;
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Botón de volver */
+.btn-volver {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--color-primario);
+  color: var(--color-primario);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  font-size: 0.8rem;
+}
+
+.btn-volver:hover {
+  background-color: var(--color-primario);
+  color: #000;
+  text-decoration: none;
+}
+
+/* Contenedor para el botón de nuevo trabajador */
+.boton-nuevo-container {
+  margin-left: auto;
+}
+
+.table-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--color-primario);
+  box-shadow: 0 0 10px var(--color-primario);
+}
+
+.table {
+  color: var(--color-texto);
+  margin-bottom: 0;
+  font-size: 0.7rem;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table thead th {
+  background: linear-gradient(to bottom, #330033 0%, #1a001a 100%);
+  border: none;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  padding: 1rem;
+  color: var(--color-primario);
+  text-shadow: 0 0 5px rgba(255, 255, 0, 0.3);
+  border-bottom: 2px solid var(--color-primario);
+  white-space: nowrap;
+}
+
+.table tbody tr {
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 0, 0.1);
+}
+
+.table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(255, 255, 0, 0.1);
+}
+
+.table td, .table th {
+  border: none;
+  vertical-align: middle;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 0, 0.1);
+  white-space: nowrap;
+}
+
+.table td:last-child, .table th:last-child {
+  border-right: none;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Botones */
+.btn {
+  font-family: 'Press Start 2P', cursive, monospace;
+  font-size: 0.6rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 4px;
+  border: 2px solid var(--color-primario);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  background: none;
+  color: var(--color-primario);
+  text-shadow: 0 0 5px rgba(255, 255, 0, 0.3);
+  box-shadow: 0 0 10px rgba(255, 255, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn i {
+  font-size: 0.8em;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 0, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: 0.5s;
+}
+
+.btn:hover::before {
+  transform: translateX(100%);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 255, 0, 0.3);
+  background-color: rgba(255, 255, 0, 0.1);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background-color: var(--color-primario);
+  color: #000;
+  border-color: var(--color-primario);
+}
+
+.btn-primary:hover {
+  background-color: #ffff66;
+  border-color: #ffff66;
+  color: #000;
+}
+
+.btn-outline-light {
+  color: var(--color-texto);
+  border-color: var(--color-texto);
+  background: transparent;
+}
+
+.btn-outline-light:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--color-primario);
+  border-color: var(--color-primario);
+}
+
+.btn-outline-danger {
+  color: #ff4444;
+  border-color: #ff4444;
+  background: transparent;
+}
+
+.btn-outline-danger:hover {
+  background-color: rgba(255, 68, 68, 0.1);
+  color: #ff6b6b;
+  border-color: #ff6b6b;
+}
+
+/* Asegurar que el modal esté por encima de todo */
+.modal {
+  z-index: 99999 !important;
+}
+
+.modal-backdrop {
+  z-index: 1040 !important;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  pointer-events: none;
+}
+
+/* Estilos para el modal */
+.modal-content {
+  background: var(--color-fondo-tarjeta);
+  border: 2px solid var(--color-primario);
+  color: var(--color-texto);
+  border-radius: 10px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: var(--color-primario);
+  box-shadow: 0 0 10px var(--color-primario);
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--color-primario);
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-footer {
+  border-top: 1px solid var(--color-primario);
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.modal-title {
+  color: var(--color-primario);
+  font-size: 1rem;
+  text-transform: uppercase;
+  text-shadow: 0 0 5px rgba(255, 255, 0, 0.3);
+  margin: 0;
+  font-weight: normal;
+}
+
+.btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+  opacity: 0.8;
+  background-size: 0.8rem;
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  margin: -0.5rem -0.5rem -0.5rem auto;
+}
+
+.btn-close:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+/* Formularios */
+.form-control, .form-select {
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--color-primario);
+  color: var(--color-texto);
+  padding: 0.8rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  font-size: 0.7rem;
+  height: auto;
+  font-family: 'Press Start 2P', cursive, monospace;
+  box-shadow: 0 0 10px rgba(255, 255, 0, 0.1);
+}
+
+.form-control:focus, .form-select:focus {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-color: var(--color-primario);
+  color: var(--color-texto);
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 0, 0.25);
+  outline: none;
+}
+
+.form-control::placeholder {
+  color: #666;
+  opacity: 0.7;
+  font-size: 0.6rem;
+}
+
+/* Estilos para las etiquetas de los formularios */
+.form-label {
+  color: var(--color-primario);
+  font-size: 0.7rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  text-shadow: 0 0 5px rgba(255, 255, 0, 0.3);
+}
+
+/* Grupo de formulario */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Mensajes de ayuda del formulario */
+.form-text {
+  color: #888;
+  font-size: 0.6rem;
+  margin-top: 0.25rem;
+}
+
+/* Alertas */
+.alert {
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.7rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.alert::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+.alert-dismissible {
+  padding-right: 3rem;
+}
+
+.alert-dismissible .btn-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.5rem;
+}
+
+.alert-success {
+  color: #4CAF50;
+  border-color: rgba(76, 175, 80, 0.3);
+}
+
+.alert-success .alert-link {
+  color: #388e3c;
+}
+
+.alert-danger {
+  color: #f44336;
+  border-color: rgba(244, 67, 54, 0.3);
+}
+
+.alert-danger .alert-link {
+  color: #d32f2f;
+}
+
+.alert-info {
+  color: #2196F3;
+  border-color: rgba(33, 150, 243, 0.3);
+}
+
+.alert-info .alert-link {
+  color: #1976D2;
+}
+
+.alert-warning {
+  color: #ff9800;
+  border-color: rgba(255, 152, 0, 0.3);
+}
+
+.alert-warning .alert-link {
+  color: #f57c00;
+}
+
+/* Títulos */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-primario);
+  margin-bottom: 1.5rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-shadow: 0 0 5px rgba(255, 255, 0, 0.3);
+  position: relative;
+  display: inline-block;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+h1::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 3px;
+  background: var(--color-primario);
+  margin: 0.5rem auto 0;
+  box-shadow: 0 0 10px var(--color-primario);
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+
+h4 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Pie de página */
+footer {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: var(--color-texto);
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: 3rem;
+  border-top: 2px solid var(--color-primario);
+  font-size: 0.7rem;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3);
+}
+
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-primario);
+  box-shadow: 0 0 10px var(--color-primario);
+}
+
+/* Efectos de hover para filas de la tabla */
+.table-hover tbody tr:hover {
+  background-color: rgba(255, 255, 0, 0.1) !important;
+}
+
+/* Efecto de borde brillante */
+.glow-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-border::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    var(--color-primario), 
+    #ff00ff, 
+    #00ffff, 
+    var(--color-primario));
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  opacity: 0;
+  transition: 0.5s;
+  animation: animate 20s linear infinite;
+}
+
+.glow-border:hover::before {
+  opacity: 1;
+}
+
+@keyframes animate {
+  0% { background-position: 0 0; }
+  50% { background-position: 300% 0; }
+  100% { background-position: 0 0; }
+}
+
+/* Efecto de vidrio mejorado para modales */
+.glass-card {
+  background: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 2px solid var(--color-primario) !important;
+  box-shadow: 0 0 15px rgba(255, 255, 0, 0.5), 
+              inset 0 0 15px rgba(255, 255, 0, 0.3) !important;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+  border-radius: 8px;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, 
+    rgba(255, 255, 0, 0.1),
+    rgba(255, 0, 255, 0.1),
+    rgba(0, 255, 255, 0.1),
+    rgba(255, 255, 0, 0.1));
+  background-size: 300% 300%;
+  z-index: -1;
+  pointer-events: none;
+  animation: glassGradient 10s ease infinite;
+  border-radius: 10px;
+}
+
+@keyframes glassGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.glass-card .modal-header {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(26, 0, 26, 0.5)) !important;
+  border-bottom: 1px solid var(--color-primario) !important;
+  padding: 1.5rem;
+}
+
+.glass-card .modal-footer {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(26, 0, 26, 0.5)) !important;
+  border-top: 1px solid var(--color-primario) !important;
+  padding: 1.5rem;
+}
+
+.glass-card .modal-body {
+  background: rgba(0, 0, 0, 0.3) !important;
+  padding: 2rem;
+}
+
+.glass-card .modal-title {
+  color: var(--color-primario);
+  text-shadow: 0 0 8px var(--color-primario);
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.glass-card .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+  opacity: 0.8;
+  transition: all 0.3s ease;
+  background: none;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  margin: -0.5rem -0.5rem -0.5rem auto;
+}
+
+.glass-card .btn-close:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+  color: var(--color-primario);
+  text-shadow: 0 0 10px var(--color-primario);
+}
+
+/* Mejora para los inputs dentro del modal */
+.glass-card .form-control,
+.glass-card .form-select {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--color-primario);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.glass-card .form-control:focus,
+.glass-card .form-select:focus {
+  background-color: rgba(0, 0, 0, 0.9);
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 0.25rem rgba(255, 255, 0, 0.25);
+  color: white;
+}

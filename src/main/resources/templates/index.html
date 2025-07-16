@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPUHUB - Inicio</title>
+    <link rel="icon" type="image/png" th:href="@{/img/g.PNG}">
+    <!-- CSS de la página -->
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <!-- Incluir header (con su propio CSS) -->
+    <th:block th:replace="fragments/header :: head"></th:block>
+</head>
+<body>
+    <!-- Contenedor para las partículas -->
+    <div id="particulas-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
+    
+    <div th:replace="fragments/header :: header"></div>
+
+    <section class="carrusel py-5">
+    <div class="container">
+        <div id="carouselExampleIndicators" class="carousel slide carousel-dark" data-bs-ride="carousel">
+            <!-- Indicadores -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            </div>
+            
+            <!-- Slides -->
+            <div class="carousel-inner rounded-3 overflow-hidden shadow-lg">
+                <div class="carousel-item active">
+                    <img src="https://hiraoka.com.pe/media/mageplaza/blog/post/t/a/tarjeta-grafica-que-es-para-que-sirve-como-funciona.jpg" 
+                         class="d-block w-100" 
+                         alt="Tarjetas gráficas"
+                         style="height: 500px; object-fit: cover;">
+                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-4 rounded">
+                        <h5 class="text-warning">Las Mejores Tarjetas Gráficas</h5>
+                        <p>Descubre nuestra amplia selección de GPUs para todos los presupuestos.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://cdn.mos.cms.futurecdn.net/TMEh2gdJWsrm4xjetk9aQg.jpg" 
+                         class="d-block w-100" 
+                         alt="Tecnología de punta"
+                         style="height: 500px; object-fit: cover;">
+                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-4 rounded">
+                        <h5 class="text-warning">Tecnología de Última Generación</h5>
+                        <p>Equipos diseñados para ofrecer el máximo rendimiento.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://images.unsplash.com/photo-1597852074816-d933c7d2b988" 
+                         class="d-block w-100" 
+                         alt="Componentes de calidad"
+                         style="height: 500px; object-fit: cover;">
+                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-4 rounded">
+                        <h5 class="text-warning">Componentes de Alta Calidad</h5>
+                        <p>Seleccionamos cuidadosamente cada componente para garantizar la mejor experiencia.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="https://intelcorp.scene7.com/is/image/intelcorp/arc-overview-pro-a60-graphics:480-270?fmt=webp-alpha" 
+                         class="d-block w-100" 
+                         alt="Soporte profesional"
+                         style="height: 500px; object-fit: cover;">
+                    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-75 p-4 rounded">
+                        <h5 class="text-warning">Soporte Profesional</h5>
+                        <p>Nuestro equipo está listo para ayudarte con cualquier consulta técnica.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Controles -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="bg-black bg-opacity-50 p-4 p-lg-5 rounded-3 shadow">
+                    <div class="text-center text-light">
+                        <h2 class="mb-4">¿Quiénes somos?</h2>
+                        <p class="lead mb-0">
+                            En un mundo donde la gestión de almacenes se ha vuelto compleja y costosa, GPUHUB llegó
+                            para cambiar las reglas del juego. Nuestra plataforma está diseñada para ofrecer una
+                            solución eficiente, intuitiva y accesible, sin comprometer la calidad ni la funcionalidad.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section class="py-5 text-light">
+        <div class="container">
+            <h2 class="text-center mb-5 text-warning">Características Principales</h2>
+            <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+                <!-- Tarjeta 1 -->
+                <div class="col">
+                    <div class="card h-100 bg-dark text-light border-light">
+                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             class="card-img-top" 
+                             alt="Seguridad informática"
+                             style="height: 200px; object-fit: cover;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-warning">Seguridad Avanzada</h5>
+                            <p class="card-text">Protección de datos y acceso restringido mediante autenticación de múltiples factores para máxima seguridad.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tarjeta 2 -->
+                <div class="col">
+                    <div class="card h-100 bg-dark text-light border-light">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             class="card-img-top" 
+                             alt="Base de datos"
+                             style="height: 200px; object-fit: cover;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-warning">Base de Datos en Tiempo Real</h5>
+                            <p class="card-text">Actualizaciones instantáneas y gestión eficiente del inventario con nuestra base de datos de alto rendimiento.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tarjeta 3 - Centrada -->
+                <div class="col-12 col-md-8 col-lg-6">
+                    <div class="card h-100 bg-dark text-light border-light">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             class="card-img-top" 
+                             alt="Interfaz intuitiva"
+                             style="height: 200px; object-fit: cover;">
+                        <div class="card-body text-center">
+                            <h5 class="card-title text-warning">Diseño Intuitivo</h5>
+                            <p class="card-text">Interfaz limpia y fácil de usar que mejora la productividad y la experiencia del usuario.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="fragments/footer :: scripts"></div>
+    <script th:src="@{/js/particulas.js}" defer></script>
+</body>
+</html>

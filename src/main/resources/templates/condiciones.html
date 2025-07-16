@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos y Condiciones</title>
+    <link rel="icon" type="image/png" th:href="@{/img/g.PNG}">
+    <link rel="icon" type="image/png" th:href="@{/img/g.PNG}">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <th:block th:replace="fragments/header :: head"></th:block>
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <div th:replace="fragments/header :: header"></div>
+    <main class="flex-fill">
+        <div class="contenedor-info-gpuhub">
+            <header>
+                <h1>Términos y Condiciones</h1>
+            </header>
+            <section>
+                <h2>1. Aceptación de los Términos</h2>
+                <p>Al acceder a nuestro sitio web, aceptas los términos y condiciones establecidos en este acuerdo. Si no estás de acuerdo con estos términos, por favor no uses nuestro sitio web.</p>
+
+                <h2>2. Uso del Sitio Web</h2>
+                <p>El acceso y uso del sitio web se realiza bajo tu propia responsabilidad. No nos hacemos responsables de ningún daño o perjuicio que pueda derivarse de la utilización de la información contenida en el sitio.</p>
+
+                <h2>3. Modificaciones</h2>
+                <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Las modificaciones entrarán en vigor al ser publicadas en este sitio web.</p>
+
+                <h2>4. Responsabilidades</h2>
+                <p>No somos responsables por la precisión de la información sobre las tarjetas gráficas ni por cualquier daño causado por la incompatibilidad con otras piezas de PC.</p>
+            </section>
+        </div>
+    </main>
+    <div th:replace="fragments/footer :: footer"></div>
+    <div th:replace="fragments/footer :: scripts"></div>
+</body>
+</html>

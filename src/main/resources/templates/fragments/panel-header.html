@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="es">
+
+<header th:fragment="panelHeader">
+    <style>
+        .navbar {
+            font-family: 'Press Start 2P', 'Courier New', monospace;
+            line-height: 1.6;
+            color: yellow;
+            background-color: #000000 !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            min-height: 60px;
+            padding: 0.5rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+        }
+        
+        .navbar-brand {
+            color: yellow !important;
+            font-size: 1.2rem;
+            margin: 0;
+            padding: 0.5rem 1rem;
+            padding: 0.5rem 1.5rem;
+            margin: 0;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .navbar-brand:hover {
+            color: #4dabf7 !important;
+        }
+        
+        .nav-link, .dropdown-item {
+            color: yellow !important;
+        }
+        
+        .nav-link:hover, .dropdown-item:hover {
+            color: #4dabf7 !important;
+            background-color: rgba(255, 255, 0, 0.1) !important;
+        }
+        
+        .offcanvas {
+            background-color: #000000 !important;
+            color: yellow !important;
+        }
+        
+        .btn-close-white {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+    </style>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
+        <div class="container">
+            <!-- Logo - Visible en todos los dispositivos -->
+            <span class="navbar-brand">GPUHUB</span>
+            
+            <!-- Botones de acción - Siempre visibles -->
+            <div class="d-flex align-items-center ms-auto">
+                <!-- Saludo al usuario -->
+                <div class="me-3 d-none d-md-block">
+                    <span class="text-light">
+                        ¡Hola, 
+                        <span class="fw-bold" th:if="${usuario != null}" th:text="${usuario.nombres}" style="color: #ffff00;">Usuario</span>
+                        <span class="fw-bold" th:unless="${usuario != null}" th:text="${#authentication.principal?.nombres ?: 'Usuario'}" style="color: #ffff00;">Usuario</span>!
+                    </span>
+                </div>
+                <!-- En móviles: Botón de menú -->
+                
+                <!-- En escritorio: Iconos -->
+                <div class="d-none d-lg-flex align-items-center gap-2">
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="border-color: #ff0 !important; color: #ff0 !important;">
+                            <i class="fas fa-user"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end bg-dark border border-light" aria-labelledby="userDropdown">
+                            <li><span class="dropdown-item text-white" th:if="${usuario.tienda != null}" th:text="'Tienda: ' + ${usuario.tienda.nombreTienda}">Tienda: Sin asignar</span></li>
+                            <li><span class="dropdown-item text-white" th:unless="${usuario.tienda != null}">Tienda: Sin asignar</span></li>
+                            <li><hr class="dropdown-divider bg-light"></li>
+                            <li><a class="dropdown-item text-danger" th:href="@{/logout}"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+</html>

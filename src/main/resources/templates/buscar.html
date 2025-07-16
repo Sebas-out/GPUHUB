@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Tiendas - GPUHUB</title>
+    <link rel="icon" type="image/png" th:href="@{/img/g.PNG}">
+    <link rel="stylesheet" th:href="@{/css/buscar.css}">
+    <th:block th:replace="fragments/header :: head"></th:block>
+    <style>
+        /* Asegura que el contenido se superponga */
+        body {
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Asegura que el contenido principal se superponga */
+        main {
+            position: relative;
+            z-index: 1;
+        }
+        
+    </style>
+</head>
+<body class="fondo-buscar">
+  <!-- Contenedor para el efecto de partículas -->
+  <div id="particulas-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
+
+  <div th:replace="fragments/header :: header"></div>
+
+  <main>
+    <section class="buscador-seccion">
+      <div class="contenedor-busqueda">
+        <h2>Encuentra las mejores tiendas</h2>
+        <div class="barra-busqueda">
+          <input type="text" class="input-busqueda" placeholder="Buscar GPU...">
+          <button class="boton-buscar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="tiendas-seccion">
+      <div class="contenedor-tiendas row g-4">
+        <!-- Aquí se renderizarán dinámicamente las tarjetas de tiendas -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal Bootstrap para mostrar almacenes y productos -->
+  <div class="modal fade" id="modalTienda" tabindex="-1" aria-labelledby="modalTiendaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTiendaLabel">Almacenes y productos</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div id="acordeonAlmacenes" class="accordion accordion-flush"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-gradient"></div>
+  <!-- Incluir footer -->
+  <div th:replace="fragments/footer :: footer"></div>
+  <!-- Incluir scripts del footer -->
+  <div th:replace="fragments/footer :: scripts"></div>
+  <!-- Scripts -->
+  <script th:src="@{/js/particulas.js}"></script>
+  <script th:src="@{/js/buscar.js}"></script>
+</body>
+</html>

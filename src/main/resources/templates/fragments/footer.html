@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<footer th:fragment="footer" class="bg-black text-white mt-5">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>GPUHUB</h5>
+                <p style="color: #ffff00;">Tu tienda de confianza para componentes de PC y tarjetas gráficas.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Enlaces Rápidos</h5>
+                <ul class="list-unstyled">
+                    <li><a th:href="@{/}" class="text-warning">Inicio</a></li>
+                    <li><a th:href="@{/servicios}" class="text-warning">Servicios y productos</a></li>
+                    <li><a th:href="@{/nosotros}" class="text-warning">Sobre nosotros</a></li>
+                    <li><a th:href="@{/condiciones}" class="text-warning">Términos y condiciones</a></li>
+                    <li><a th:href="@{/politica}" class="text-warning">Política de privacidad</a></li>
+                    <li><a th:href="@{/cookies}" class="text-warning">Política de cookies</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contacto</h5>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-map-marker-alt me-2"></i> Dirección: Calle Falsa 123</li>
+                    <li><i class="fas fa-phone me-2"></i> Teléfono: +123 456 789</li>
+                    <li><i class="fas fa-envelope me-2"></i> Email: info@gpuhub.com</li>
+                </ul>
+                <div class="social-links mt-3">
+                    <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <hr class="bg-light">
+        <div class="text-center">
+            <p class="mb-0">&copy; 2025 GPUHUB. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Scripts al final del documento -->
+<div th:fragment="scripts">
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Script de partículas -->
+    <script th:src="@{/js/particulas.js}"></script>
+</div>

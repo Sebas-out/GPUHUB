@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - GPUHUB</title>
+    <link rel="icon" type="image/png" th:href="@{/img/g.PNG}">
+    <link rel="stylesheet" th:href="@{/css/panel.css}">
+    <th:block th:replace="fragments/header :: head"></th:block>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Ajustar el contenido debajo del navbar fijo */
+        body { padding-top: 56px; }
+        @media (min-width: 768px) {
+            body { padding-top: 60px; }
+        }
+    </style>
+</head>
+<body class="fondo-panel">
+  <!-- Efecto de partículas -->
+  <div id="particulas-js"></div>
+  
+  <!-- Header específico del panel -->
+  <div th:replace="fragments/panel-header :: panelHeader"></div>
+
+  <!-- Contenido principal -->
+  <main class="contenedor-principal">
+    <h1 class="titulo-panel">Panel de Control</h1>
+    
+    <div class="contenedor-opciones">
+      <a th:href="@{/gestion}" class="opcion">
+        <i class="fas fa-users"></i>
+        <h2>Ver Trabajadores</h2>
+        <p>Visualiza y gestiona la lista de trabajadores registrados en el sistema.</p>
+      </a>
+      
+      <a th:href="@{/trabajadores/nuevo}" class="opcion">
+        <i class="fas fa-user-plus"></i>
+        <h2>Agregar Trabajador</h2>
+        <p>Registra un nuevo trabajador en el sistema con sus respectivos permisos.</p>
+      </a>
+      
+      <a th:href="@{/cambios}" class="opcion">
+        <i class="fas fa-history"></i>
+        <h2>Cambios</h2>
+        <p>Historial de cambios realizados por los trabajadores en el inventario.</p>
+      </a>
+      
+      <a th:href="@{/inventario}" class="opcion">
+        <i class="fas fa-boxes"></i>
+        <h2>Inventario</h2>
+        <p>Gestiona el stock de productos y realiza seguimiento de existencias.</p>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Scripts -->
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Script de partículas -->
+  <script th:src="@{/js/particulas.js}"></script>
+  <script>
+    // Inicializar partículas
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof particlesJS !== 'undefined') {
+        particlesJS.load('particulas-js', '/js/particles-config.json');
+      }
+    });
+  </script>
+</body>
+</html>

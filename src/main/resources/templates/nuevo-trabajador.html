@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Trabajador - GPUHUB</title>
+    <link rel="icon" type="image/png" th:href="@{/img/g.PNG}">
+    <link rel="stylesheet" th:href="@{/css/panel.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <th:block th:replace="fragments/header :: head"></th:block>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Estilos específicos para el formulario de trabajador */
+        .fecha-input {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background-color: #222;
+            color: #fff;
+            font-family: 'Press Start 2P', cursive, monospace;
+            font-size: 0.7em;
+        }
+        
+        .fecha-input:focus {
+            border-color: var(--color-primario);
+            box-shadow: 0 0 0 0.2rem rgba(255, 255, 0, 0.25);
+            outline: none;
+        }
+        
+        .boton-primario {
+            margin-top: 0;
+            margin-left: auto;
+        }
+        
+        .formulario-login {
+            max-width: 100%;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #ffd700;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #444;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            background-color: #222;
+            color: #fff;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #ffd700;
+            box-shadow: 0 0 0 0.2rem rgba(255, 215, 0, 0.25);
+            outline: none;
+        }
+        
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+        
+        .invalid-feedback {
+            color: #ff6b6b;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+        }
+        
+        .alert {
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-family: 'Press Start 2P', cursive, monospace;
+        }
+        
+        .alert-success {
+            background-color: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+            border: 1px solid #28a745;
+        }
+        
+        .alert-danger {
+            background-color: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+            border: 1px solid #dc3545;
+        }
+        
+        /* Ajustes para el contenedor principal */
+        .contenedor-principal {
+            padding-top: 60px;
+        }
+    </style>
+</head>
+
+<body class="fondo-panel">
+  <!-- Efecto de partículas -->
+  <div id="particulas-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;"></div>
+  
+  <!-- Header específico del panel -->
+  <div th:replace="fragments/panel-header :: panelHeader"></div>
+  
+
+  <main class="contenedor-principal">
+    <div class="contenedor-login">
+      <div class="tarjeta-login">
+        <div class="encabezado-login">
+          <h1>Agregar Nuevo Trabajador</h1>
+          <p>Complete todos los campos requeridos</p>
+        </div>
+        
+        <!-- Mensajes de éxito/error -->
+        <div th:if="${mensajeExito != null}" class="alert alert-success" role="alert">
+            <i class="fas fa-check-circle"></i> <span th:text="${mensajeExito}"></span>
+        </div>
+        
+        <div th:if="${error != null}" class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-circle"></i> <span th:text="${error}"></span>
+        </div>
+        
+        <form th:action="@{/trabajadores/guardar}" th:object="${trabajador}" method="post" class="formulario-login" id="formularioTrabajador">
+          <input type="hidden" th:field="*{tienda.idTienda}" />
+          <input type="hidden" th:field="*{rol}" />
+          
+          <div class="grupo-formulario">
+            <label for="dni">DNI</label>
+            <input type="text" id="dni" th:field="*{dni}" 
+                   class="form-control"
+                   placeholder="Ingrese DNI (8 dígitos)" 
+                   pattern="[0-9]{8}" 
+                   title="El DNI debe tener 8 dígitos"
+                   required
+                   oninput="validateField(this)">
+            <div class="invalid-feedback">Por favor ingrese un DNI válido (8 dígitos)</div>
+          </div>
+          
+          <div class="grupo-formulario">
+            <label for="nombres">Nombres</label>
+            <input type="text" id="nombres" th:field="*{nombres}" 
+                   class="form-control"
+                   placeholder="Ingrese nombres" 
+                   required
+                   oninput="validateField(this)">
+            <div class="invalid-feedback">Por favor ingrese los nombres del trabajador</div>
+          </div>
+          
+          <div class="grupo-formulario">
+            <label for="apellidos">Apellidos</label>
+            <input type="text" id="apellidos" th:field="*{apellidos}" 
+                   class="form-control"
+                   oninput="validateField(this)"
+                   placeholder="Ingrese apellidos" 
+                   required>
+            <div class="invalid-feedback">Por favor ingrese los apellidos del trabajador</div>
+          </div>
+          
+          <div class="grupo-formulario">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" th:field="*{telefono}" 
+                   class="form-control"
+                   placeholder="Ingrese teléfono (9 dígitos)" 
+                   pattern="[0-9]{9}" 
+                   title="El teléfono debe tener 9 dígitos"
+                   required
+                   oninput="validateField(this)">
+            <div class="invalid-feedback">Por favor ingrese un número de teléfono válido (9 dígitos)</div>
+          </div>
+          
+          <div class="grupo-formulario">
+            <label for="fechaAcceso">Fecha de Acceso</label>
+            <input type="date" id="fechaAcceso" th:field="*{fechaAcceso}" 
+                   class="form-control fecha-input"
+                   required
+                   onchange="validateField(this)">
+            <div class="invalid-feedback">Por favor seleccione una fecha de acceso</div>
+          </div>
+          
+          <div class="grupo-formulario">
+            <label for="correo">Correo Electrónico</label>
+            <input type="email" id="correo" th:field="*{correo}" 
+                   class="form-control"
+                   placeholder="Ingrese correo electrónico"
+                   required
+                   oninput="validateField(this)">
+            <div class="invalid-feedback">Por favor ingrese un correo electrónico válido</div>
+          </div>
+          
+          <div class="grupo-formulario">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" th:field="*{password}" 
+                   class="form-control"
+                   placeholder="Ingrese contraseña (mínimo 6 caracteres)"
+                   minlength="6"
+                   required
+                   oninput="validateField(this)">
+            <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres</div>
+          </div>
+          
+          <div class="opciones-login" style="justify-content: space-between; margin-top: 2rem;">
+            <a th:href="@{/panel}" class="enlace-olvido">
+              <i class="fas fa-arrow-left"></i> Volver al panel
+            </a>
+            <button type="submit" class="boton-primario">
+              <i class="fas fa-user-plus"></i> Agregar Trabajador
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script th:src="@{/js/particulas.js}" defer></script>
+  
+  <script>
+    // Variable para controlar si el formulario ya se está procesando
+    let isSubmitting = false;
+    
+    // Función para limpiar mensajes de error
+    function limpiarMensajesError() {
+        const errorDivs = document.querySelectorAll('.alert.alert-danger');
+        errorDivs.forEach(div => div.style.display = 'none');
+    }
+    
+    // Función para limpiar el formulario
+    function limpiarFormulario() {
+        const form = document.getElementById('formularioTrabajador');
+        if (form) {
+            form.reset();
+            // Limpiar clases de validación
+            form.querySelectorAll('.is-valid, .is-invalid').forEach(el => {
+                el.classList.remove('is-valid', 'is-invalid');
+            });
+            // Restablecer el botón de envío
+            const submitButton = form.querySelector('button[type="submit"]');
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-user-plus"></i> Agregar Trabajador';
+            }
+        }
+    }
+    
+    // Limpiar mensajes de error al cargar la página
+    document.addEventListener('DOMContentLoaded', function() {
+        limpiarMensajesError();
+        
+        // Verificar si hay un mensaje de éxito (lo que indica un registro exitoso)
+        const mensajeExito = document.querySelector('.alert.alert-success');
+        if (mensajeExito) {
+            // Limpiar el formulario después de un registro exitoso
+            limpiarFormulario();
+            
+            // Desplazarse al inicio para mostrar el mensaje de éxito
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+    
+    // Validación de DNI (8 dígitos)
+    const dniInput = document.getElementById('dni');
+    if (dniInput) {
+        dniInput.addEventListener('input', function(e) {
+            // Limpiar mensajes de error al empezar a escribir
+            limpiarMensajesError();
+            
+            // Limitar a 8 dígitos numéricos
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 8);
+            
+            // Validar el formato
+            validateField(this);
+            
+            // Actualizar la validación en tiempo real
+            if (this.value.length === 8) {
+                this.setCustomValidity('');
+            } else {
+                this.setCustomValidity('El DNI debe tener exactamente 8 dígitos');
+            }
+        });
+        
+        // Validar al perder el foco
+        dniInput.addEventListener('blur', function() {
+            if (this.value.length !== 8) {
+                this.setCustomValidity('El DNI debe tener exactamente 8 dígitos');
+                this.reportValidity();
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    }
+    
+    // Validación de teléfono (9 dígitos)
+    const telefonoInput = document.getElementById('telefono');
+    if (telefonoInput) {
+        telefonoInput.addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9);
+            validateField(this);
+        });
+    }
+    
+    // Función para validar un campo
+    function validateField(field) {
+        if (!field) return;
+        
+        // Solo validar si el campo ha sido tocado o si el formulario se ha intentado enviar
+        if (field.dataset.touched === 'true' || (document.forms['formularioTrabajador'] && document.forms['formularioTrabajador'].dataset.submitted === 'true')) {
+            if (field.checkValidity()) {
+                field.classList.remove('is-invalid');
+                if (field.value && field.value.trim() !== '') {
+                    field.classList.add('is-valid');
+                } else {
+                    field.classList.remove('is-valid');
+                }
+            } else {
+                field.classList.remove('is-valid');
+                field.classList.add('is-invalid');
+            }
+        }
+    }
+    
+    // Marcar campos como tocados cuando pierden el foco
+    document.querySelectorAll('input, select, textarea').forEach(input => {
+        input.addEventListener('blur', function() {
+            this.dataset.touched = 'true';
+            validateField(this);
+        });
+    });
+    
+    // Función para inicializar el formulario
+    function inicializarFormulario() {
+        const formulario = document.getElementById('formularioTrabajador');
+        if (!formulario) return;
+        
+        // Configurar el evento de envío del formulario
+        formulario.addEventListener('submit', manejarEnvioFormulario);
+        
+        // Configurar validación en tiempo real
+        formulario.querySelectorAll('input, select, textarea').forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.id === 'dni') {
+                    // Limpiar mensajes de error al empezar a escribir
+                    limpiarMensajesError();
+                    
+                    // Limitar a 8 dígitos numéricos
+                    this.value = this.value.replace(/[^0-9]/g, '').slice(0, 8);
+                    
+                    // Validar el formato
+                    validateField(this);
+                    
+                    // Actualizar la validación en tiempo real
+                    if (this.value.length === 8) {
+                        this.setCustomValidity('');
+                    } else {
+                        this.setCustomValidity('El DNI debe tener exactamente 8 dígitos');
+                    }
+                }
+                
+                // Validar campo al perder el foco
+                if (this.dataset.touched === 'true') {
+                    validateField(this);
+                }
+            });
+            
+            // Marcar como tocado al perder el foco
+            input.addEventListener('blur', function() {
+                this.dataset.touched = 'true';
+                validateField(this);
+            });
+        });
+    }
+    
+    // Función para manejar el envío del formulario
+    function manejarEnvioFormulario(e) {
+        // Prevenir el envío múltiple
+        if (isSubmitting) {
+            e.preventDefault();
+            return false;
+        }
+        
+        const submitButton = this.querySelector('button[type="submit"]');
+        
+        // Limpiar mensajes de error previos
+        limpiarMensajesError();
+        
+        // Deshabilitar el botón de envío para evitar doble envío
+        isSubmitting = true;
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+        
+        let isValid = true;
+        const form = this;
+        
+        // Marcar el formulario como enviado
+        form.dataset.submitted = 'true';
+        
+        // Validar cada campo
+        form.querySelectorAll('input, select, textarea').forEach(input => {
+            input.dataset.touched = 'true';
+            validateField(input);
+            
+            // Validación especial para DNI
+            if (input.id === 'dni') {
+                if (input.value.length !== 8) {
+                    input.setCustomValidity('El DNI debe tener exactamente 8 dígitos');
+                    input.reportValidity();
+                } else {
+                    input.setCustomValidity('');
+                }
+            }
+            
+            // Verificar si el campo es válido
+            if (!input.checkValidity()) {
+                isValid = false;
+            }
+        });
+        
+        if (!isValid) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Habilitar el botón de nuevo
+            isSubmitting = false;
+            submitButton.disabled = false;
+            submitButton.innerHTML = '<i class="fas fa-user-plus"></i> Agregar Trabajador';
+            
+            // Desplazarse al primer error
+            const firstInvalid = form.querySelector('.is-invalid');
+            if (firstInvalid) {
+                firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstInvalid.focus();
+            }
+            
+            return false;
+        }
+        
+        // Si el formulario es válido, continuar con el envío AJAX
+        console.log('Formulario válido, enviando...');
+        
+        // Enviar el formulario manualmente vía AJAX
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => {
+            if (response.redirected) {
+                // Si el servidor redirige, seguir la redirección
+                window.location.href = response.url;
+            } else {
+                return response.text().then(html => {
+                    // Si hay un error, actualizar solo la parte del formulario
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newForm = doc.getElementById('formularioTrabajador');
+                    
+                    if (newForm) {
+                        form.outerHTML = newForm.outerHTML;
+                        // Volver a adjuntar los event listeners
+                        inicializarFormulario();
+                    }
+                    
+                    // Habilitar el botón de nuevo
+                    isSubmitting = false;
+                    const submitButton = document.querySelector('button[type="submit"]');
+                    if (submitButton) {
+                        submitButton.disabled = false;
+                        submitButton.innerHTML = '<i class="fas fa-user-plus"></i> Agregar Trabajador';
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error al enviar el formulario:', error);
+            
+            // Habilitar el botón de nuevo
+            isSubmitting = false;
+            const submitButton = document.querySelector('button[type="submit"]');
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.innerHTML = '<i class="fas fa-user-plus"></i> Agregar Trabajador';
+            }
+            
+            // Mostrar mensaje de error
+            alert('Ocurrió un error al procesar la solicitud. Por favor, inténtalo de nuevo.');
+        });
+    }
+    
+    // Inicializar el formulario cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+        limpiarMensajesError();
+        inicializarFormulario();
+        
+        // Verificar si hay un mensaje de éxito (lo que indica un registro exitoso)
+        const mensajeExito = document.querySelector('.alert.alert-success');
+        if (mensajeExito) {
+            // Limpiar el formulario después de un registro exitoso
+            limpiarFormulario();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Establecer la fecha actual si no hay un valor
+        const fechaInput = document.getElementById('fechaAcceso');
+        if (fechaInput && !fechaInput.value) {
+            const today = new Date().toISOString().split('T')[0];
+            fechaInput.value = today;
+        }
+        
+        // Inicializar todos los campos como no tocados
+        document.querySelectorAll('input, select, textarea').forEach(input => {
+            input.dataset.touched = 'false';
+        });
+    });
+  </script>
+</body>
+</html>
